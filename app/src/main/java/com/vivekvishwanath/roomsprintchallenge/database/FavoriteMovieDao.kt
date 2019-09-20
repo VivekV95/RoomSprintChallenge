@@ -18,5 +18,5 @@ interface FavoriteMovieDao {
     fun deleteMovie(favoriteMovie: FavoriteMovie)
 
     @Query("SELECT * FROM favorite_movies_table ORDER BY title ASC")
-    fun getFavoriteMovies(): MutableLiveData<MutableList<FavoriteMovie>>
+    fun getFavoriteMovies(): LiveData<MutableList<FavoriteMovie>>
 }

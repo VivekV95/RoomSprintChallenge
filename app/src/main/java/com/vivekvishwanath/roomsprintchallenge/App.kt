@@ -28,7 +28,7 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        repo = MovieRepository(applicationContext)
+        repo = MovieRepository()
         retrofitInstance = RetrofitInstance()
         favoriteMovieDao = FavoriteMovieDatabase.getInstance(applicationContext).getFavoriteMovieDao()
     }

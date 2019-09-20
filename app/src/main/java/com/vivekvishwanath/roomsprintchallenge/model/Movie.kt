@@ -1,6 +1,7 @@
 package com.vivekvishwanath.roomsprintchallenge.model
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 class MovieDBResponse(val results: MutableList<MovieOverview>)
 
@@ -38,5 +39,7 @@ data class FavoriteMovie(
     val title: String,
     val overview: String,
     val poster_path: String,
-    var isFavorite: Boolean
+    var isFavorite: Boolean,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0
 )

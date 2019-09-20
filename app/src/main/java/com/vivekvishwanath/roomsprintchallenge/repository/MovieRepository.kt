@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MovieRepository(context: Context) : MovieInterface {
+class MovieRepository : MovieInterface {
 
     override fun getMatchingMovies(
         apiKey: String,
@@ -22,7 +22,7 @@ class MovieRepository(context: Context) : MovieInterface {
     ): LiveData<MutableList<MovieOverview>> {
         val matchingMovies = MutableLiveData<MutableList<MovieOverview>>()
         retrofitInstance
-            .getMatchingMovies("b98f8f717026d85eb364fe4ac55cd214", query)
+            .getMatchingMovies(apiKey, query)
             .enqueue(object : Callback<MovieDBResponse> {
                 override fun onFailure(call: Call<MovieDBResponse>, t: Throwable) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

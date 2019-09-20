@@ -51,13 +51,24 @@ class FavoritesActivity : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.movie_list_item, parent, false))
+                LayoutInflater.from(parent.context).inflate(R.layout.movie_list_item, parent, false)
+            )
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.bindMovie(movies.elementAt(position))
+            if (movies.elementAt(position).isWatched)
+                holder.itemView.setBackgroundColor(
+                    ContextCompat.getColor(holder.itemView.context, android.R.color.holo_green_dark))
+            else
+                holder.itemView.setBackgroundColor(
+                    ContextCompat.getColor(holder.itemView.context, android.R.color.white))
+
+
             holder.itemView.movie_item_parent.setOnLongClickListener {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                movies.elementAt(position).isWatched = !movies.elementAt(position).isWatched
+                favoriteViewModel?.updateMovie(movies.elementAt(position))
+                false
             }
         }
 
@@ -68,7 +79,6 @@ class FavoritesActivity : AppCompatActivity() {
 
             fun bindMovie(movie: FavoriteMovie) {
                 itemView.movie_title.text = movie.title
-                itemView.movie_description.text = movie.overview
             }
         }
     }

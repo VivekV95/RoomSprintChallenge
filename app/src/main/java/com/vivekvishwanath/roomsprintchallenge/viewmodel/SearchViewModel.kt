@@ -5,12 +5,13 @@ import androidx.lifecycle.ViewModel
 import com.vivekvishwanath.roomsprintchallenge.favoriteMovieDao
 import com.vivekvishwanath.roomsprintchallenge.model.FavoriteMovie
 import com.vivekvishwanath.roomsprintchallenge.model.MovieOverview
+import com.vivekvishwanath.roomsprintchallenge.prefs
 import com.vivekvishwanath.roomsprintchallenge.repo
 
 class SearchViewModel : ViewModel() {
 
     fun getMatchingMovies(query: String) =
-        repo.getMatchingMovies("b98f8f717026d85eb364fe4ac55cd214", query)
+        repo.getMatchingMovies(prefs.getString("api_key", "")!!, query)
 
     fun getFavoriteMovies() = repo.getFavoriteMovies()
 

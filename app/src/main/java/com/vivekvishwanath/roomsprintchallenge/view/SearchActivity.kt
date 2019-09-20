@@ -123,7 +123,7 @@ class SearchActivity : AppCompatActivity() {
 
             fun bindMovie(movie: MovieOverview) {
                 itemView.movie_title.text = movie.title
-                itemView.movie_description.text = movie.overview
+                itemView.movie_date.text = movie.release_date
             }
         }
     }

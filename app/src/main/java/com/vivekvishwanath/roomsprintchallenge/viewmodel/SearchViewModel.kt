@@ -8,5 +8,6 @@ import com.vivekvishwanath.roomsprintchallenge.repo
 class SearchViewModel : ViewModel() {
     fun getMatchingMovies(query: String): LiveData<MutableList<MovieOverview>> {
         return repo.getMatchingMovies("b98f8f717026d85eb364fe4ac55cd214", query)
+
     }
 }

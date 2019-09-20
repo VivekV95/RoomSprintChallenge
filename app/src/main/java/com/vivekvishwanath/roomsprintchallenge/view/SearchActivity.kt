@@ -2,6 +2,9 @@ package com.vivekvishwanath.roomsprintchallenge.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.SearchView
 import androidx.lifecycle.LiveData
@@ -9,23 +12,37 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vivekvishwanath.roomsprintchallenge.R
 import com.vivekvishwanath.roomsprintchallenge.adapter.MovieListAdapter
+import com.vivekvishwanath.roomsprintchallenge.model.FavoriteMovie
 import com.vivekvishwanath.roomsprintchallenge.model.MovieOverview
 import com.vivekvishwanath.roomsprintchallenge.viewmodel.SearchViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.movie_list_item.view.*
 
 class SearchActivity : AppCompatActivity() {
 
-    private var movies = mutableListOf<MovieOverview>()
+    private val movies = mutableListOf<MovieOverview>()
+    private val favoriteMovies = hashMapOf<Int, FavoriteMovie>()
+    private var searchViewModel: SearchViewModel? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val searchViewModel = ViewModelProviders .of(this).get(SearchViewModel::class.java)
+        searchViewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
 
         val movieListAdapter = MovieListAdapter(movies)
+
+        searchViewModel?.let { searchViewModel1 ->
+            searchViewModel1.getFavoriteMovies().observe(this, Observer<MutableList<FavoriteMovie>> {
+                it.forEach {favoriteMovie ->
+                   favoriteMovies[favoriteMovie.id] = favoriteMovie
+               }
+            })
+        }
 
         search_recycler_view.apply {
             setHasFixedSize(true)
@@ -41,16 +58,53 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                searchViewModel
-                    .getMatchingMovies(p0!!)
-                    .observe(this@SearchActivity, Observer<MutableList<MovieOverview>> {
-                        movies.clear()
-                        movies.addAll(it)
-                        movieListAdapter.notifyDataSetChanged()
-                    })
+                searchViewModel?.let{ searchViewModel1 ->
+                    searchViewModel1.getMatchingMovies(p0!!)
+                        .observe(this@SearchActivity, Observer<MutableList<MovieOverview>> {
+                            movies.clear()
+                            movies.addAll(it)
+                            movieListAdapter.notifyDataSetChanged()
+                        })
+                }
                 return false
             }
 
         })
+    }
+
+    inner class MovieListAdapter(private val movies: List<MovieOverview>): RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            return ViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.movie_list_item, parent, false))
+        }
+
+        override fun getItemCount() = movies.size
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.bindMovie(movies[position])
+
+            holder.itemView.movie_item_parent.setOnLongClickListener {
+                if (favoriteMovies.containsKey(movies[position].id)) {
+                    favoriteMovies[movies[position].id]?.let { movie ->
+                        searchViewModel?.deleteMovie(movie)
+                    }
+                } else {
+                    val movie = FavoriteMovie(
+                        movies[position].title!!,
+                        movies[position].overview!!,
+                        movies[position].poster_path!!)
+                    searchViewModel?.insertMovie(movie)
+                }
+                false
+            }
+        }
+
+        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+            fun bindMovie(movie: MovieOverview) {
+                itemView.movie_title.text = movie.title
+                itemView.movie_description.text = movie.overview
+            }
+        }
     }
 }

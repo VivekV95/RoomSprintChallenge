@@ -19,4 +19,5 @@ interface FavoriteMovieDao {
 
     @Query("SELECT * FROM favorite_movies_table ORDER BY title ASC")
     fun getFavoriteMovies(): LiveData<MutableList<FavoriteMovie>>
+
 }

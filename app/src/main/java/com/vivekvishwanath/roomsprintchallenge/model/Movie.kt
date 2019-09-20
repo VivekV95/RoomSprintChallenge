@@ -39,7 +39,7 @@ data class FavoriteMovie(
     val title: String,
     val overview: String,
     val poster_path: String,
-    var isFavorite: Boolean,
-    @PrimaryKey(autoGenerate = true)
+    var isFavorite: Boolean = false,
+    @PrimaryKey
     val id: Int = 0
 )

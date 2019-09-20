@@ -64,11 +64,14 @@ class FavoritesActivity : AppCompatActivity() {
                 holder.itemView.setBackgroundColor(
                     ContextCompat.getColor(holder.itemView.context, android.R.color.white))
 
-
             holder.itemView.movie_item_parent.setOnLongClickListener {
+                favoriteViewModel?.deleteMovie(movies.elementAt(position))
+                true
+            }
+
+            holder.itemView.movie_item_parent.setOnClickListener {
                 movies.elementAt(position).isWatched = !movies.elementAt(position).isWatched
                 favoriteViewModel?.updateMovie(movies.elementAt(position))
-                false
             }
         }
 

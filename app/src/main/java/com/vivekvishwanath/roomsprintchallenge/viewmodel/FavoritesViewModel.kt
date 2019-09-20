@@ -8,8 +8,6 @@ class FavoritesViewModel : ViewModel() {
 
     fun getFavoriteMovies() = repo.getFavoriteMovies()
 
-    fun insertMovie(movie: FavoriteMovie) = repo.insertMovie(movie)
-
     fun deleteMovie(movie: FavoriteMovie) = repo.deleteMovie(movie)
 
     fun updateMovie(movie: FavoriteMovie) = repo.updateMovie(movie)

@@ -8,7 +8,7 @@ import com.vivekvishwanath.roomsprintchallenge.R
 import com.vivekvishwanath.roomsprintchallenge.model.MovieOverview
 import kotlinx.android.synthetic.main.movie_list_item.view.*
 
-class MovieListAdapter(val movies: List<MovieOverview>): RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
+class MovieListAdapter(private val movies: List<MovieOverview>): RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.movie_list_item, parent, false))

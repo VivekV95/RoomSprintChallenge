@@ -41,6 +41,7 @@ class SearchActivity : AppCompatActivity() {
                     it?.forEach { favoriteMovie ->
                         favoriteMovies[favoriteMovie.id] = favoriteMovie
                     }
+                    movieListAdapter.notifyDataSetChanged()
                 })
         }
 

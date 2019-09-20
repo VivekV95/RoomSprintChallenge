@@ -4,7 +4,6 @@ import androidx.room.Entity
 
 class MovieDBResponse(val results: MutableList<MovieOverview>)
 
-@Entity
 class MovieOverview {
     var vote_average: Double = 0.toDouble()
         private set
@@ -33,3 +32,11 @@ class MovieOverview {
     var popularity: Double = 0.toDouble()
         private set
 }
+
+@Entity
+data class FavoriteMovie(
+    val title: String,
+    val overview: String,
+    val poster_path: String,
+    var isFavorite: Boolean
+)

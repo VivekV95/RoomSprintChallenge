@@ -10,19 +10,19 @@ object RetrofitInstance {
 
     private const val BASE_URL = "https://api.themoviedb.org/3/"
 
-    val gson = GsonBuilder()
+    private val gson = GsonBuilder()
         .setLenient()
         .create()
 
-    val retrofitService = Retrofit
+    private val retrofitService = Retrofit
         .Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
         .create(MovieDBApiInterface::class.java)
 
-    fun getMatchingMovies(): MutableList<MovieDBResponse> {
-
+    fun getMatchingMovies(apiKey: String, query: String): Call<MovieDBResponse> {
+        return retrofitService.getMatchingMovies(apiKey, query)
     }
 
 }

@@ -40,11 +40,11 @@ class MovieRepository : MovieInterface {
         return matchingMovies
     }
 
-    private var favoriteMovies = MutableLiveData<MutableList<FavoriteMovie>>()
+    // private var favoriteMovies = favoriteMovieDao.getFavoriteMovies()
 
     override fun getFavoriteMovies(): LiveData<MutableList<FavoriteMovie>> {
-        FavoriteMoviesAsyncTask(favoriteMovies).execute()
-        return favoriteMovies
+        //FavoriteMoviesAsyncTask(favoriteMovies).execute()
+        return favoriteMovieDao.getFavoriteMovies()
     }
 
     override fun insertMovie(favoriteMovie: FavoriteMovie) {
@@ -71,7 +71,7 @@ class MovieRepository : MovieInterface {
 
         class InsertMovieAsyncTask(): AsyncTask<FavoriteMovie, Unit, Unit>() {
             override fun doInBackground(vararg p0: FavoriteMovie?) {
-                p0[1]?.let {
+                p0[0]?.let {
                     favoriteMovieDao.insertMovie(it)
                 }
             }
@@ -79,7 +79,7 @@ class MovieRepository : MovieInterface {
 
         class UpdateMovieAsyncTask(): AsyncTask<FavoriteMovie, Unit, Unit>() {
             override fun doInBackground(vararg p0: FavoriteMovie?) {
-                p0[1]?.let {
+                p0[0]?.let {
                     favoriteMovieDao.updateMovie(it)
                 }
             }
@@ -87,7 +87,7 @@ class MovieRepository : MovieInterface {
 
         class DeleteMovieAsyncTask(): AsyncTask<FavoriteMovie, Unit, Unit>() {
             override fun doInBackground(vararg p0: FavoriteMovie?) {
-                p0[1]?.let {
+                p0[0]?.let {
                     favoriteMovieDao.deleteMovie(it)
                 }
             }

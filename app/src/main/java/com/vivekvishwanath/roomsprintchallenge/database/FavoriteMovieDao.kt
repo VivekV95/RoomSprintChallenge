@@ -8,10 +8,10 @@ import com.vivekvishwanath.roomsprintchallenge.model.FavoriteMovie
 @Dao
 interface FavoriteMovieDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(favoriteMovie: FavoriteMovie)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateMovie(favoriteMovie: FavoriteMovie)
 
     @Delete

@@ -1,10 +1,8 @@
-package com.vivekvishwanath.roomsprintchallenge
+package com.vivekvishwanath.roomsprintchallenge.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.vivekvishwanath.roomsprintchallenge.R
 
 class MainActivity : AppCompatActivity() {
 

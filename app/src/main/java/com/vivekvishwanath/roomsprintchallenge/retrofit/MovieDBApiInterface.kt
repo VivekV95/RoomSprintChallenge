@@ -1,5 +1,6 @@
-package com.vivekvishwanath.roomsprintchallenge
+package com.vivekvishwanath.roomsprintchallenge.retrofit
 
+import com.vivekvishwanath.roomsprintchallenge.model.MovieDBResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

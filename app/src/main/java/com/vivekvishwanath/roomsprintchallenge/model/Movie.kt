@@ -1,4 +1,4 @@
-package com.vivekvishwanath.roomsprintchallenge
+package com.vivekvishwanath.roomsprintchallenge.model
 
 import androidx.room.Entity
 
@@ -33,7 +33,7 @@ class MovieOverview {
         private set
 }
 
-@Entity
+@Entity(tableName = "favorite_movies_table")
 data class FavoriteMovie(
     val title: String,
     val overview: String,
